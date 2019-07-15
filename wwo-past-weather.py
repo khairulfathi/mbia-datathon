@@ -1,3 +1,7 @@
+# TODO:
+#   1. To include list of locations in query
+#   2. Save result into database
+
 import requests
 import os
 import calendar
