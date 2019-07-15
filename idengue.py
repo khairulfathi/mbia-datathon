@@ -41,7 +41,7 @@ for td in data.find_all('td'):
 		row_marker += 1
 		column_marker = 0
 
-with open('idengue_output.json', 'w') as outfile:
+with open('output/idengue_output.json', 'w') as outfile:
 	json.dump(df, outfile)
-	
+
 print("Last update : ", updated_at[0])
