@@ -33,12 +33,14 @@ updated_at = re.findall("[0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9]", str(meta))
 updated_at = datetime.date(int(updated_at[2]), int(updated_at[1]), int(updated_at[0]))
 
 # start processing list of hotspot
+# to process all <td> tags only, <tr> was no properly closed
 for td in data.find_all('td'):
 
 	df[row_marker][key[column_marker]] = td.get_text().strip()
 	column += 1
 	column_marker += 1
 
+	# split to new row for every 7 columns
 	if column % 7 == 0:
 		row_marker += 1
 		column_marker = 0
