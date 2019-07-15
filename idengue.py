@@ -5,6 +5,7 @@ from collections import defaultdict
 import ssl
 import re
 import json
+import datetime
 
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
@@ -28,7 +29,8 @@ df = defaultdict(dict)
 key = ["no", "negeri", "pbt_kkm", "lokaliti_wabak", "kumulatif_kes", "tarikh_mula", "tempoh_wabak"]
 
 # start processing meta data
-updated_at = re.findall("[0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9]", str(meta))
+updated_at = re.findall("[0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9]", str(meta))[0].split('-')
+updated_at = datetime.date(int(updated_at[2]), int(updated_at[1]), int(updated_at[0]))
 
 # start processing list of hotspot
 for td in data.find_all('td'):
@@ -41,7 +43,7 @@ for td in data.find_all('td'):
 		row_marker += 1
 		column_marker = 0
 
-with open('output/idengue_output.json', 'w') as outfile:
+with open('output/idengue_output_' + updated_at.strftime("%Y%m%d_%U") + '.json', 'w') as outfile:
 	json.dump(df, outfile)
 
-print("Last update : ", updated_at[0])
+print("Last update : ", updated_at)
